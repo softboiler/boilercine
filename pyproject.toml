@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.3,<4"]
+requires = [ "flit_core >=3.3,<4",]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -7,7 +7,7 @@ name = "boilercine"
 requires-python = ">=3.11"
 dependencies = []
 readme = "README.md"
-dynamic = ["version", "description"]
+dynamic = [ "version", "description",]
 [[project.authors]]
 name = "Blake Naccarato"
 email = "blake.naccarato+boilercine@gmail.com"
@@ -15,4 +15,27 @@ email = "blake.naccarato+boilercine@gmail.com"
 [project.urls]
 Home = "https://github.com/blakeNaccarato/boilercine"
 
-[project.optional-dependencies]
+[tool.ruff]
+fix = true
+select = [ "ALL",]
+src = [ "src", "tests",]
+target-version = "py311"
+extend-exclude = [ "template", "typings", ".github", ".tools", ".venv",]
+ignore = [ "ANN", "ARG005", "C408", "COM", "D10", "D20", "D213", "D402", "DTZ", "E501", "EM", "ERA", "FBT", "F841", "G0", "INP001", "ISC", "PD013", "PD901", "PD011", "PGH003", "PLR0913", "PLW2901", "RET", "TCH", "TRY003", "W2", "F821", "S101", "T201",]
+unfixable = [ "F601",]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+[tool.ruff.isort]
+split-on-trailing-comma = false
+
+[tool.ruff.per-file-ignores]
+"tests/**" = [ "N815", "ARG001", "S101",]
+"src/boilercine/models.py" = [ "N815",]
+
+[tool.ruff.flake8-bugbear]
+extend-immutable-calls = [ "typer.Argument", "typer.Option",]
+
+[tool.ruff.pep8-naming]
+classmethod-decorators = [ "pydantic.validator",]
