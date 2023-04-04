@@ -12,6 +12,7 @@ jobs:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
         with:
           python-version: "3.11"
+      - run: "pip install --no-deps --requirement .tools/requirements/requirements_nodeps.txt"
       - run: "pyright"
   pytest-cov:
     runs-on: "ubuntu-latest"
@@ -19,6 +20,7 @@ jobs:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
         with:
           python-version: "3.11"
+      - run: "pip install --no-deps --requirement .tools/requirements/requirements_nodeps.txt"
       - run: "pytest --cov"
       - uses: "codecov/codecov-action@v3.1.1"
   bump_project:
