@@ -1,0 +1,18 @@
+[build-system]
+requires = ["flit_core >=3.3,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "boilercine"
+requires-python = ">=3.11"
+dependencies = []
+readme = "README.md"
+dynamic = ["version", "description"]
+[[project.authors]]
+name = "Blake Naccarato"
+email = "blake.naccarato+boilercine@gmail.com"
+
+[project.urls]
+Home = "https://github.com/blakeNaccarato/boilercine"
+
+[project.optional-dependencies]
