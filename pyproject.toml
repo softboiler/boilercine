@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "boilercine"
 requires-python = ">=3.11"
-dependencies = [ "numpy>=1.24.2",]
+dependencies = [ "click", "colorama", "docopt", "numpy", "timecode",]
 readme = "README.md"
 dynamic = [ "version", "description",]
 [[project.authors]]
