@@ -9,5 +9,3 @@ pip install git+https://github.com/blakeNaccarato/boilercine@main
 ```
 
 I did not add pycine explicitly to requirements because this package relies on an unreleased commit of pycine. Install it without its dependencies to avoid forcing installation of a particular flavor of OpenCV. The `opencv-python` package is a good choice for most users, but you could use `opencv-contrib-python` as well. I reproduce all of its other dependencies as the dependencies of this package.
-
-Note that there is currently an upstream bug that causes an error when trying to read successive CINEs, specifying different frame counts per CINE. Consecutive reads of CINEs with the same number of frames works fine.
