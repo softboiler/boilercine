@@ -527,7 +527,7 @@ class Header:
     def from_file(cls, cine_file: Path, timezone: tzinfo) -> Self:
         """Extract the header from a CINE file."""
         return cls(
-            **read_header(cine_file),
+            **read_header(cine_file),  # type: ignore  # Upstream
             timezone=timezone,
             utc=None,  # type: ignore  # Handled in __post_init__
         )
