@@ -9,25 +9,31 @@ jobs:
   pyright:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.1.0"
         with:
           python-version: "3.11"
-      - run: "pip install --no-deps --requirement .tools/requirements/requirements_nodeps.txt"
-      - run: "pyright"
-  pytest-cov:
+      - run: ".tools/scripts/Invoke-Pyright.ps1"
+        shell: "pwsh"
+  ruff:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.1.0"
         with:
           python-version: "3.11"
-      - run: "pip install --no-deps --requirement .tools/requirements/requirements_nodeps.txt"
+      - run: "ruff --no-fix --format github ."
+  pytest:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.1.0"
+        with:
+          python-version: "3.11"
       - run: "pytest --cov"
-      - uses: "codecov/codecov-action@v3.1.1"
+      - uses: "codecov/codecov-action@v3.1.4"
   bump_project:
-    needs: ["pyright", "pytest-cov"]
+    needs: ["pyright", "ruff", "pytest"]
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.1.0"
         with:
           python-version: "3.11"
           install-project: false

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: ["docs/**"]
+    paths: ["docs/**", "README.md", "CHANGELOG.md"]
 
 permissions:
   contents: "read"
@@ -19,10 +19,9 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.1.0"
         with:
           python-version: "3.11"
-      - run: "pip install --no-deps --requirement .tools/requirements/requirements_nodeps.txt"
       - run: "python -m sphinx -T -E docs _site"
       - uses: "actions/upload-pages-artifact@v1.0.8"
   deploy:
@@ -34,4 +33,4 @@ jobs:
     needs: "build"
     steps:
       - id: "deployment"
-        uses: "actions/deploy-pages@v2.0.0"
+        uses: "actions/deploy-pages@v2.0.1"

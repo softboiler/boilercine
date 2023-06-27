@@ -1,5 +1,7 @@
 # boilercine
 
+Convert CINEs for a boiling study.
+
 Install the dependencies of this package manually.
 
 ```Shell

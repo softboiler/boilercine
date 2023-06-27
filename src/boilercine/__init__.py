@@ -1,4 +1,4 @@
-"""Handle CINE video files.
+"""Convert CINEs for a boiling study.
 
 For processing of boiling video data.
 """

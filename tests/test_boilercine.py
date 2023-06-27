@@ -1,5 +1,6 @@
-import boilercine
+"""Tests."""
 
 
-def test():
-    boilercine.__version__
+def test_import():
+    """Trivial test that the package is importable."""
+    import boilercine  # noqa: F401
