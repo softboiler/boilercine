@@ -1,11 +1,19 @@
+exclude: |
+  (?x)^(
+    \.copier-answers\.yml
+  $)
 ci:
   skip:
-    - "compose-pyproject"
+    - "sync"
+    - "fawltydeps-src"
+    - "fawltydeps-docs"
+    - "fawltydeps-scripts"
+    - "fawltydeps-tests"
     - "pytest-fast-only"
-    - "pytest-slow-only"
-    - "pyright"
   autoupdate_schedule: "quarterly"
-
+default_install_hook_types:
+  - pre-commit
+  - post-checkout # sync
 repos:
   - repo: "meta"
     hooks:
@@ -14,143 +22,96 @@ repos:
       - id: "check-useless-excludes"
   - repo: "local"
     hooks:
-      # * -------------------------------------------------------------------------- * #
-      # * Changes below should persist in significant template updates.
-
-      # * -------------------------------------------------------------------------- * #
-      # * Changes below may be lost in significant template updates.
-
-      - id: "compose-pyproject"
-        name: "compose-pyproject"
+      - id: "sync"
+        name: "sync"
+        stages:
+          - "pre-commit"
+          - "post-checkout"
         pass_filenames: false
         language: "system"
-        entry: "pwsh -Command python .tools/scripts/compose_pyproject.py"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; scripts/Sync-Py.ps1"
+        exclude: |
+          (?x)^(
+            lock.*\.json
+          $)
+      - id: "fawltydeps-src"
+        name: "fawltydeps-src"
+        pass_filenames: false
+        language: "system"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file pyproject.toml"
         files: |
           (?x)^(
             pyproject.toml
-            |requirements.txt
-            |.tools/pyproject.toml
+            |src/.*$
           )$
-      - id: "pyright"
-        name: "pyright"
+      - id: "fawltydeps-docs"
+        name: "fawltydeps-docs"
         pass_filenames: false
         language: "system"
-        entry: "pwsh .tools/scripts/Invoke-Pyright.ps1"
-        files: |
-          (?x)^(
-            src/.*
-            |tests/.*
-            |pyproject.toml
-            |requirements.txt
-            |.tools/(
-              pyproject.toml
-              |requirements/.*
-            )
-          )$
+        files: "^docs/.*$"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file docs/pyproject.toml"
+      - id: "fawltydeps-scripts"
+        name: "fawltydeps-scripts"
+        pass_filenames: false
+        language: "system"
+        files: "^scripts/.*$"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file scripts/pyproject.toml"
+      - id: "fawltydeps-tests"
+        name: "fawltydeps-tests"
+        pass_filenames: false
+        language: "system"
+        files: "^tests/.*$"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file tests/pyproject.toml"
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
-        verbose: true
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command "pytest -m 'not slow' --suppress-no-test-exit-code"
+          pwsh -Command ". scripts/Initialize-Shell.ps1; pytest -m 'not slow' --suppress-no-test-exit-code"
         files: |
           (?x)^(
-            pyproject.toml
-            |requirements.txt
-            |.tools/(
-              pyproject.toml
-              |requirements/.*
-            )
-          )$
-      - id: "pytest-slow-only"
-        name: "pytest-slow-only"
-        verbose: true
-        pass_filenames: false
-        language: "system"
-        entry: |
-          pwsh -Command "pytest -m 'slow' --suppress-no-test-exit-code"
-        files: |
-          (?x)^(
-            src/.*
+            .*/pyproject\.toml
+            |docs/.*
+            |requirements/.*
+            |scripts/.*
+            |src/.*
             |tests/.*
           )$
-
-  # * ------------------------------------------------------------------------------ * #
-  # * Changes below should persist in significant template updates.
-
-  # * ------------------------------------------------------------------------------ * #
-  # * Changes below may be lost in significant template updates.
-
-  - repo: local
-    hooks:
-      - id: pytest
-        name: pytest
-        language: system
-        entry: pwsh -Command pytest
-        pass_filenames: false
-        files: '^((tests\/)|(src\/)).*$'
-      - id: pyright
-        name: pyright
-        language: system
-        entry: pwsh -Command pyright
-        pass_filenames: false
-        files: '^((tests\/)|(src\/)).*$'
-
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: "v4.4.0"
+    rev: "v4.6.0"
     hooks:
       - id: "end-of-file-fixer"
       - id: "trailing-whitespace"
   - repo: "https://github.com/DavidAnson/markdownlint-cli2"
-    rev: "v0.7.1"
+    rev: "v0.13.0"
     hooks:
-      - id: "markdownlint-cli2-fix"
-  - repo: "https://github.com/psf/black"
-    rev: "23.3.0"
-    hooks:
-      - id: "black"
-  - repo: "https://github.com/charliermarsh/ruff-pre-commit"
-    rev: "v0.0.270"
-    hooks:
-      - id: "ruff"
+      - id: "markdownlint-cli2"
   - repo: "https://github.com/srstevenson/nb-clean"
-    rev: "2.4.0"
+    rev: "3.3.0"
     hooks:
       - id: "nb-clean"
         args:
           - "--remove-empty-cells"
+          - "--preserve-notebook-metadata"
           - "--preserve-cell-metadata"
-          - "special"
-          - "tags"
-          - "--"
-        files: |
-          (?x)^(
-            src/.*
-            |tests/.*
-          )$
-      - id: "nb-clean"
-        name: "nb-clean (keep docs outputs)"
-        args:
-          - "--remove-empty-cells"
-          - "--preserve-cell-outputs"
-          - "--preserve-cell-metadata"
-          - "special"
           - "tags"
           - "--"
         files: |
           (?x)^(
             docs/.*
+            |src/.*
+            |tests/.*
           )$
-  - repo: "https://github.com/asottile/blacken-docs"
-    rev: "1.13.0"
+  - repo: "https://github.com/charliermarsh/ruff-pre-commit"
+    rev: "v0.4.8"
     hooks:
-      - id: "blacken-docs"
-        additional_dependencies: ["black==23.3.0"]
-  - repo: "https://github.com/nbQA-dev/nbQA"
-    rev: "1.7.0"
-    hooks:
-      - id: "nbqa-black"
-        additional_dependencies: ["black==23.3.0"]
-      - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.270"]
+      - id: "ruff"
+        args: ["--extend-fixable", "PIE790"]
+        types_or: ["python", "pyi", "jupyter"]
+      - id: "ruff-format"
+        types_or: ["python", "pyi", "jupyter"]
