@@ -11,12 +11,16 @@ license = { file = "LICENSE" }
 requires-python = ">=3.11"
 classifiers = ["License :: OSI Approved :: MIT License"]
 dependencies = [
+    # ? Require `pycine` dependencies, but unconstrain `opencv-python`
     "click>=8.1.7",
     "colorama>=0.4.6",
     "docopt>=0.6.2",
     "numpy>=1.26.4",
     "timecode>=1.4.0",
 ]
+[project.optional-dependencies]
+# * Minimal CV flavor needed, but allow `boilercine` to coexist with different flavors
+cv = ["opencv-python-headless>=4.9.0.80"]
 [project.urls]
 Changes = "https://blakeNaccarato.github.io/boilercine/changelog.html"
 Docs = "https://blakeNaccarato.github.io/boilercine"
@@ -34,6 +38,19 @@ ignore_errors = true
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
 code = ["src"]
+ignore_undeclared = [
+    # ? Require `pycine` dependencies, but unconstrain `opencv-python`
+    "pycine",
+]
+ignore_unused = [
+    # ? Require `pycine` dependencies, but unconstrain `opencv-python`
+    "click",
+    "colorama",
+    "docopt",
+    "numpy",
+    "timecode",
+    "opencv-python-headless",
+]
 
 [tool.pytest.ini_options]
 addopts = '''
