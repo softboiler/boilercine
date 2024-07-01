@@ -149,10 +149,7 @@ FIELDS_TO_REMOVE_THIS_STUDY = (
 
 def struct_to_dict(structure):
     """Convert a C-style structure to a dictionary from its `_fields_`."""
-    return {
-        field[0]: getattr(structure, field[0])
-        for field in structure._fields_  # noqa: SLF001
-    }
+    return {field[0]: getattr(structure, field[0]) for field in structure._fields_}
 
 
 def capfirst(string: str) -> str:
@@ -448,7 +445,6 @@ class Setup:
 
     def __post_init__(self):
         """Convert low-level structures to dataclasses."""
-
         self.WBGain = [WBGain2(**struct_to_dict(i)) for i in self.WBGain]
         self.WBView = WBGain2(**struct_to_dict(self.WBView))
         self.UF = ImFilter(**struct_to_dict(self.UF))  # type: ignore
@@ -738,11 +734,10 @@ class FlatHeader:
         cinefileheader = asdict(header.cinefileheader)
         for field, value in cinefileheader.items():
             if field == "TriggerTime":
-                trigger_time = cinefileheader[field]
+                trigger_time = value
                 flat[capfirst(field)] = (
                     datetime.fromtimestamp(
-                        trigger_time["seconds"],
-                        timezone,
+                        trigger_time["seconds"], timezone
                     ).astimezone(UTC)
                     + timedelta(seconds=trigger_time["fractions"] / 2**32)
                 ).isoformat()
@@ -759,7 +754,7 @@ class FlatHeader:
             if field in {"AutoExpRect", "WBView", "CropRect", "TrigTC", "UF"}:
                 flat |= {
                     f"{field}{capfirst(subfield)}": subvalue
-                    for subfield, subvalue in setup[field].items()
+                    for subfield, subvalue in value.items()
                 }
             elif field == "WBGain":
                 flat |= {
