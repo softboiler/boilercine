@@ -9,13 +9,24 @@ description = "Convert CINEs for a boiling study."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.11"
-classifiers = ["License :: OSI Approved :: MIT License"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    # ? Also in CI (https://github.com/actions/python-versions/releases)
+    # "Programming Language :: Python :: 3.7",  # ? EOL (https://devguide.python.org/versions/)
+    # "Programming Language :: Python :: 3.8",  # ? EOL soon (https://devguide.python.org/versions/)
+    # "Programming Language :: Python :: 3.9",  # ? `sphinx-autobuild` broken even when pointing to fix (https://github.com/sphinx-doc/sphinx-autobuild/issues/166)
+    # "Programming Language :: Python :: 3.10",  # ? Used by packages with some 3.11-specific features
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    # "Programming Language :: Python :: 3.13",  # ? (via myst-nb) https://github.com/crate-py/rpds/issues/72
+    # "Programming Language :: Python :: 3.14",  # ? Unreleased (https://peps.python.org/pep-0745)
+]
 dependencies = [
     # ? Require `pycine` dependencies, but unconstrain `opencv-python`
     "click>=8.1.7",
     "colorama>=0.4.6",
     "docopt>=0.6.2",
-    "numpy>=1.26.4",
+    "numpy>=1.24.4",
     "timecode>=1.4.0",
 ]
 [project.optional-dependencies]
@@ -70,7 +81,7 @@ directory = "changelog"
 filename = "CHANGELOG.md"
 template = "changelog/towncrier_template.md.jinja"
 title_format = ""
-issue_format = "[#{issue}](https://github.com/blakeNaccarato/boilercine/{issue})"
+issue_format = "[#{issue}](https://github.com/blakeNaccarato/boilercine/issues/{issue})"
 underlines = ["", "", ""]
 [[tool.towncrier.section]]
 path = ""
