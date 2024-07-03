@@ -2,9 +2,9 @@
 _commit: 2024.1.1-27-g9551e5b
 _src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-22.04
-active: false
+active: true
 github_repo_name: boilercine
-project_description: Convert CINEs for a boiling study.
+project_description: Convert CINEs for a boiling study
 project_email: blake.naccarato+boilercine@gmail.com
 project_name: boilercine
 project_owner_github_username: blakeNaccarato
