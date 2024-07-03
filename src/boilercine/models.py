@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any, Self
 
 import numpy as np
-from pycine.file import read_header
+from pycine.file import read_header  # pyright: ignore[reportMissingImports]
 
 from boilercine.types import ArrDT, ArrFloat
 
@@ -149,10 +149,7 @@ FIELDS_TO_REMOVE_THIS_STUDY = (
 
 def struct_to_dict(structure):
     """Convert a C-style structure to a dictionary from its `_fields_`."""
-    return {
-        field[0]: getattr(structure, field[0])
-        for field in structure._fields_  # noqa: SLF001
-    }
+    return {field[0]: getattr(structure, field[0]) for field in structure._fields_}
 
 
 def capfirst(string: str) -> str:
@@ -448,7 +445,6 @@ class Setup:
 
     def __post_init__(self):
         """Convert low-level structures to dataclasses."""
-
         self.WBGain = [WBGain2(**struct_to_dict(i)) for i in self.WBGain]
         self.WBView = WBGain2(**struct_to_dict(self.WBView))
         self.UF = ImFilter(**struct_to_dict(self.UF))  # type: ignore
@@ -479,6 +475,7 @@ class Setup:
 @dataclass
 class Header:
     """Top-level header for CINE file metadata.
+
     See: https://github.com/ottomatic-io/pycine/blob/815cfca06cafc50745a43b2cd0168982225c6dca/pycine/file.py#L15.
     """
 
@@ -738,11 +735,10 @@ class FlatHeader:
         cinefileheader = asdict(header.cinefileheader)
         for field, value in cinefileheader.items():
             if field == "TriggerTime":
-                trigger_time = cinefileheader[field]
+                trigger_time = value
                 flat[capfirst(field)] = (
                     datetime.fromtimestamp(
-                        trigger_time["seconds"],
-                        timezone,
+                        trigger_time["seconds"], timezone
                     ).astimezone(UTC)
                     + timedelta(seconds=trigger_time["fractions"] / 2**32)
                 ).isoformat()
@@ -759,7 +755,7 @@ class FlatHeader:
             if field in {"AutoExpRect", "WBView", "CropRect", "TrigTC", "UF"}:
                 flat |= {
                     f"{field}{capfirst(subfield)}": subvalue
-                    for subfield, subvalue in setup[field].items()
+                    for subfield, subvalue in value.items()
                 }
             elif field == "WBGain":
                 flat |= {
@@ -773,7 +769,7 @@ class FlatHeader:
 
 
 @dataclass
-class FlatHeaderStudySpecific:
+class FlatHeaderStudySpecific:  # noqa: D101
     ExposureTime: int
     Type: int
     Headersize: int

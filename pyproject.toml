@@ -26,7 +26,7 @@ dependencies = [
     "click>=8.1.7",
     "colorama>=0.4.6",
     "docopt>=0.6.2",
-    "numpy>=1.24.4",
+    "numpy>=1.26.0",
     "timecode>=1.4.0",
 ]
 [project.optional-dependencies]
@@ -286,6 +286,9 @@ skip-magic-trailing-comma = true
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
 [tool.ruff.lint.extend-per-file-ignores]
+"src/boilercine/models.py" = [
+    "N815", # Allow mixed-case names mimicking the CINE API
+]
 "**/*.ipynb" = [
     "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
     "E703", # Allow semicolons to suppress outputs in notebooks

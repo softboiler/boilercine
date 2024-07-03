@@ -7,7 +7,7 @@ from collections.abc import Iterator
 from datetime import tzinfo
 from pathlib import Path
 
-from pycine.raw import read_frames
+from pycine.raw import read_frames  # pyright: ignore[reportMissingImports]
 
 from boilercine.models import FlatHeader, FlatHeaderStudySpecific, Header
 from boilercine.types import ArrDT, Img
@@ -27,12 +27,12 @@ See: https://github.com/ottomatic-io/pycine/blob/815cfca06cafc50745a43b2cd016898
 
 
 def get_cine_images(
-    cine_file: Path,
-    num_frames: int | None = None,
-    start_frame: int = 0,
+    cine_file: Path, num_frames: int | None = None, start_frame: int = 0
 ) -> Iterator[Img]:
     """Get images from a CINE video file."""
-    images, setup, bpp = read_frames(cine_file, start_frame=start_frame, count=num_frames)  # type: ignore
+    images, setup, bpp = read_frames(
+        cine_file, start_frame=start_frame, count=num_frames
+    )  # type: ignore
     if setup.SoftwareVersion < MIN_VER:
         raise RuntimeError(
             f"CINE file produced by software older than {MIN_VER}. Reproduce the video"
