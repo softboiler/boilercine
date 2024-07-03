@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "boilercine"
-version = "0.0.0"
+version = "2024.1.1"
 description = "Convert CINEs for a boiling study."
 readme = "README.md"
 license = { file = "LICENSE" }
