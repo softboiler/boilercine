@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 <!-- towncrier release notes start -->
 
+## [2024.1.2](https://github.com/softboiler/boilercine/tree/2024.1.2)
+
+Sign releases from now on.
+
 ## [2024.1.1](https://github.com/blakeNaccarato/boilercine/tree/2024.1.1)
 
 Initial release under CalVer.
