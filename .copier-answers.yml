@@ -5,9 +5,9 @@ actions_runner: ubuntu-22.04
 active: true
 github_repo_name: boilercine
 project_description: Convert CINEs for a boiling study
-project_email: blake.naccarato+boilercine@gmail.com
+project_email: blake.naccarato@gmail.com
 project_name: boilercine
-project_owner_github_username: blakeNaccarato
+project_owner_github_username: softboiler
 project_owner_name: Blake Naccarato
 project_version: 2024.1.1
 python_version: '3.11'

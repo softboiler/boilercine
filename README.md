@@ -1,6 +1,6 @@
 # boilercine
 
-[![All Contributors](https://img.shields.io/github/all-contributors/blakeNaccarato/boilercine?color=ee8449&style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/github/all-contributors/softboiler/boilercine?color=ee8449&style=flat-square)](#contributors)
 
 Convert CINEs for a boiling study.
 
@@ -16,9 +16,9 @@ I did not add pycine explicitly to requirements because this package relies on a
 
 ## Project information
 
-- [Changes](<https://blakeNaccarato.github.io/boilercine/changelog.html>)
-- [Docs](<https://blakeNaccarato.github.io/boilercine>)
-- [Contributing](<https://blakeNaccarato.github.io/boilercine/contributing.html>)
+- [Changes](<https://softboiler.github.io/boilercine/changelog.html>)
+- [Docs](<https://softboiler.github.io/boilercine>)
+- [Contributing](<https://softboiler.github.io/boilercine/contributing.html>)
 
 ## Contributors
 

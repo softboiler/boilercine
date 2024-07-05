@@ -15,7 +15,7 @@ classifiers = [
     # "Programming Language :: Python :: 3.7",  # ? EOL (https://devguide.python.org/versions/)
     # "Programming Language :: Python :: 3.8",  # ? EOL soon (https://devguide.python.org/versions/)
     # "Programming Language :: Python :: 3.9",  # ? `sphinx-autobuild` broken even when pointing to fix (https://github.com/sphinx-doc/sphinx-autobuild/issues/166)
-    # "Programming Language :: Python :: 3.10",  # ? Used by packages with some 3.11-specific features
+    # "Programming Language :: Python :: 3.10",  # ? `boilercore` uses some 3.11-specific features
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     # "Programming Language :: Python :: 3.13",  # ? (via myst-nb) https://github.com/crate-py/rpds/issues/72
@@ -33,13 +33,13 @@ dependencies = [
 # * Minimal CV flavor needed, but allow `boilercine` to coexist with different flavors
 cv = ["opencv-python-headless>=4.9.0.80"]
 [project.urls]
-Changes = "https://blakeNaccarato.github.io/boilercine/changelog.html"
-Docs = "https://blakeNaccarato.github.io/boilercine"
-Home = "https://github.com/blakeNaccarato/boilercine"
-Tracker = "https://github.com/blakeNaccarato/boilercine/issues"
+Changes = "https://softboiler.github.io/boilercine/changelog.html"
+Docs = "https://softboiler.github.io/boilercine"
+Home = "https://github.com/softboiler/boilercine"
+Tracker = "https://github.com/softboiler/boilercine/issues"
 [[project.authors]]
 name = "Blake Naccarato"
-email = "blake.naccarato+boilercine@gmail.com"
+email = "blake.naccarato@gmail.com"
 
 [tool.coverage.run]
 branch = true
@@ -81,7 +81,7 @@ directory = "changelog"
 filename = "CHANGELOG.md"
 template = "changelog/towncrier_template.md.jinja"
 title_format = ""
-issue_format = "[#{issue}](https://github.com/blakeNaccarato/boilercine/issues/{issue})"
+issue_format = "[#{issue}](https://github.com/softboiler/boilercine/issues/{issue})"
 underlines = ["", "", ""]
 [[tool.towncrier.section]]
 path = ""

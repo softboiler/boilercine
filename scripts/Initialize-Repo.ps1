@@ -21,12 +21,12 @@ git commit --no-verify -m 'Lock'
 # Modify GitHub repo if there were not already commits in this repo
 if ($fresh) {
     if (!(git remote)) {
-        git remote add origin 'https://github.com/blakeNaccarato/boilercine.git'
+        git remote add origin 'https://github.com/softboiler/boilercine.git'
         git branch --move --force main
     }
     gh repo edit --description "$((Get-Content '.copier-answers.yml' |
     Select-String -Pattern '^project_description:\s(.+)$').Matches.Groups[1].value)"
-    gh repo edit --homepage 'https://blakeNaccarato.github.io/boilercine/'
+    gh repo edit --homepage 'https://softboiler.github.io/boilercine/'
 }
 
 git push --set-upstream origin main
