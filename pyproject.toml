@@ -57,7 +57,6 @@ ignore_unused = [
     "click",
     "colorama",
     "docopt",
-    "numpy",
     "timecode",
     "opencv-python-headless",
 ]

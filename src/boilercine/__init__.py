@@ -7,6 +7,7 @@ from collections.abc import Iterator
 from datetime import tzinfo
 from pathlib import Path
 
+from numpy import rot90
 from pycine.raw import read_frames  # pyright: ignore[reportMissingImports]
 
 from boilercine.models import FlatHeader, FlatHeaderStudySpecific, Header
@@ -38,7 +39,10 @@ def get_cine_images(
             f"CINE file produced by software older than {MIN_VER}. Reproduce the video"
             " in a newer version of Phantom Cine Viewer and try again."
         )
-    yield from (image.astype(f"uint{bpp}") for image in images)
+    yield from (
+        rot90(image, (setup.Rotate % 360) // 90).astype(f"uint{bpp}")
+        for image in images
+    )
 
 
 def get_cine_attributes(
