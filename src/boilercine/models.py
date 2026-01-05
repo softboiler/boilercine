@@ -462,7 +462,8 @@ class Setup:
 
         for field in CHAR_ARRAY_FIELDS:
             self.__dict__[field] = (
-                np.char.decode(self.__dict__[field], encoding="ascii")
+                np.char
+                .decode(self.__dict__[field], encoding="ascii")
                 .tobytes()
                 .decode("ascii")
                 .rstrip("\x00")
@@ -511,7 +512,8 @@ class Header:
         self.pImage = list(self.pImage)
         self.utc = np.array(
             [
-                datetime.fromtimestamp(timestamp, timezone)
+                datetime
+                .fromtimestamp(timestamp, timezone)
                 .astimezone(UTC)
                 .replace(tzinfo=None)
                 for timestamp in self.timestamp
